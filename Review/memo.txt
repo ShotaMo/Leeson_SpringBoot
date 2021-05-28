@@ -1,1 +1,34 @@
+ ■STSを使ったGitHubへのpush方法
+ https://www.purin-it.com/git-sts-push
  
+ ■Macchinetta Server Framework (1.x) Development Guideline
+ https://macchinetta.github.io/server-guideline/current/ja/index.html
+ 
+ ■Spring 入門 ～ SpringBoot 2 を使ってお問い合わせアプリとToDoアプリを作る ～
+ https://www.udemy.com/course/java_spring_beginner/
+ 
+ 作成したEntityクラスを使うためにServiceクラスを作成する（public class MemberServiceImpl）
+ 
+ MemberService（インターフェース）
+ ・機能の概要：いわゆるToDoリストのようなもの。メソッド名と引数はこんなものですよ〜とことだけを決めておき、実装はその先の実装先のクラスに任せる
+　　　　　　　 そのインターフェースの名前さえ確認すればそのメソッド名のものが必ず存在することが確約できる
+・クラスを自動生成することもある：ライブラリがあるということ。MyBatisとか。例えば、今回でいえば、MemberServiceというクラスを作ったとする。
+　　　　　　　　　　　　　　　　　getAll()というメソッドを持っているとする。そうすると、SQLでデータベースに接続する時、getAll()がメンバーのテーブルから
+　　　　　　　　　　　　　　　　　全てのデータを引っ張ってくることが予想できる。そうすると、予想ができるんだから、その先のクラスを人間がコツコツ作らずとも
+　　　　　　　　　　　　　　　　　自動生成すればいいんじゃないかという発想。
+
+・データベースの1行を1インスタンスにするためのgetAll()とかのメソッドを持ったMemberServiceImplを作成する
+→greet(int i)：引数の数字に応じて異なる挨拶文を返すメソッド
+→getAll()：会員の一覧データを返す
+→これらを作っておくと何がいいのかというと、メインメソッドが非常に完結になる
+→メインメソッドがMemberServiceImplを呼び出し、あとはお任せすることができるため
+→メインメソッドを社長と考えると、専門スタッフのメンバーサービスに対してこんなことやっておいてという命令をかけるイメージ
+→その先のロジックは全てメンバーサービスに書くことになるので、メインメソッドの中のコード量が減り、面倒なことをお任せすることができる
+
+Serviceクラスを作成したら、実行して確認する（mainメソッドでServiceクラスを読み込んで実行する）
+→読み込むときは"new MemberServiceImpl()"と記載し、以降でServiceインスタンスのメソッドを利用していく
+
+データはどこに保存されるのか？
+メモリには2つの領域がある
+・スタック領域：データ型（primitiveやインスタンスのアドレス）が保管される（ex. "int num=2;", "Service s = new Service();"
+・ヒープ領域：
